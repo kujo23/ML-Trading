@@ -76,16 +76,16 @@ def compute_portvals(start_date, end_date, orders_file, start_val):
 def test_run():
     """Driver function."""
     # Define input parameters
-    start_date = '2005-12-31'
-    end_date = '2007-12-31'
-    orders_file = os.path.join("orders", "orders1.csv")
+    start_date = '2010-01-01'
+    end_date = '2010-12-31'
+    orders_file = os.path.join("orders", "orders_outsample.csv")
     start_val = 10000
 
     # Process orders
     portvals = compute_portvals(start_date, end_date, orders_file, start_val)
     if isinstance(portvals, pd.DataFrame):
         portvals = portvals[portvals.columns[0]]  # if a DataFrame is returned select the first column to get a Series
-    
+
     # Get portfolio stats
     cum_ret, avg_daily_ret, std_daily_ret, sharpe_ratio = get_portfolio_stats(portvals)
 
@@ -114,7 +114,7 @@ def test_run():
 
     # Plot computed daily portfolio value
     df_temp = pd.concat([portvals, prices_SPX['$SPX']], keys=['Portfolio', 'SPY'], axis=1)
-    plot_normalized_data(df_temp, title="Daily portfolio value")
+    plot_normalized_data(df_temp, title="IBM Data Out Sample Backtest")
 
 
 if __name__ == "__main__":

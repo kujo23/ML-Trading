@@ -1,13 +1,12 @@
-"""
-A simple wrapper for linear regression.  (c) 2015 Tucker Balch
-"""
-
 import numpy as np
+import math
 
-class LinRegLearner(object):
+class KNNLearner(object):
 
-    def __init__(self):
-        pass # move along, these aren't the drones you're looking for
+    def __init__(self, k):
+        self.dataX = None
+        self.dataY = None
+        self.k = k
 
     def addEvidence(self,dataX,dataY):
         """
@@ -15,11 +14,9 @@ class LinRegLearner(object):
         @param dataX: X values of data to add
         @param dataY: the Y training values
         """
-        newdataX = np.ones([dataX.shape[0],dataX.shape[1]+1])
-        newdataX[:,0:dataX.shape[1]]=dataX
-
-        # build and save the model
-        self.model_coefs, residuals, rank, s = np.linalg.lstsq(newdataX, dataY)
+        self.dataX = dataX.copy()
+        self.dataY = dataY.copy()
+        
         
     def query(self,points):
         """
@@ -27,7 +24,15 @@ class LinRegLearner(object):
         @param points: should be a numpy array with each row corresponding to a specific query.
         @returns the estimated values according to the saved model.
         """
-        return (self.model_coefs[:-1] * points).sum(axis = 1) + self.model_coefs[-1]
+        retY = []
 
+        for point in points:
+            euclid_dist = np.array([np.linalg.norm(point - data) for data in self.dataX])
+            indices = np.argsort(euclid_dist)
+            meanY = np.mean(self.dataY[indices[0:self.k]])
+            retY.append(meanY)
+
+        return retY
+        
 if __name__=="__main__":
     print "the secret clue is 'zzyzx'"
