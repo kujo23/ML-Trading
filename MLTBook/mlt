@@ -1,0 +1,26 @@
+j = np.random.random(2,2)
+
+print j
+print j/j[0]
+
+
+
+
+sharpe ratio better than cummulative return
+
+
+
+2 and 20  fund looses 5%
+
+profit loss of client
+profit/loss of manager
+if return 15%, profit /loss manager
+
+
+intrinsic value., discount rate
+
+
+efficient market hypothesis, diff 3 versions , weak form, 
+
+Information Ratio 
+
